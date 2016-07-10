@@ -18,6 +18,10 @@
 #define MOTOR_0_DIR_PIN 1
 #define MOTOR_0_EN_PIN 39
 
+#define MOTOR_1_STEP_PIN 2
+#define MOTOR_1_DIR_PIN 3
+#define MOTOR_1_EN_PIN 38
+
 
 void setup() {
   SET_OUTPUT(MOTOR_0_STEP_PIN);
@@ -26,6 +30,13 @@ void setup() {
   WRITE(MOTOR_0_STEP_PIN, LOW);
   WRITE(MOTOR_0_DIR_PIN, LOW);
   WRITE(MOTOR_0_EN_PIN, LOW);
+
+  SET_OUTPUT(MOTOR_1_STEP_PIN);
+  SET_OUTPUT(MOTOR_1_DIR_PIN);
+  SET_OUTPUT(MOTOR_1_EN_PIN);
+  WRITE(MOTOR_1_STEP_PIN, LOW);
+  WRITE(MOTOR_1_DIR_PIN, LOW);
+  WRITE(MOTOR_1_EN_PIN, LOW);
 
   // setup Timer
 #define STEP_INTERRUPT_FREQUENCY 10000
@@ -54,8 +65,10 @@ void loop() {
 void stepInterrupt(void) {
   if (xspeed > 0) {
     WRITE(MOTOR_0_DIR_PIN, LOW);
+    WRITE(MOTOR_1_DIR_PIN, LOW);
   } else {
     WRITE(MOTOR_0_DIR_PIN, HIGH);
+    WRITE(MOTOR_1_DIR_PIN, HIGH);
   }
 
   xpos += xspeed;
@@ -71,6 +84,7 @@ void stepInterrupt(void) {
 
   while (step--) {
     WRITE(MOTOR_0_STEP_PIN,LOW);
+    WRITE(MOTOR_1_STEP_PIN,LOW);
     // looking for over 1usec step time, delay some:
     __asm__ __volatile__ ("nop\n\t");
     __asm__ __volatile__ ("nop\n\t");
@@ -82,5 +96,6 @@ void stepInterrupt(void) {
     // __asm__ __volatile__ ("nop\n\t");
     //__asm__ __volatile__ ("nop\n\t");
     WRITE(MOTOR_0_STEP_PIN,HIGH);
+    WRITE(MOTOR_1_STEP_PIN,HIGH);
   }
 }
