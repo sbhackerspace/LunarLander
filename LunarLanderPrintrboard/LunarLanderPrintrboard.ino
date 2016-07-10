@@ -49,8 +49,8 @@ long xpos = 0; // used to find when to step
 
 #define X_SPEED_INCREMENT 100
 int xspeed_increment_demo = X_SPEED_INCREMENT;
-int xspeed_increment_demo_max =  20000;
-int xspeed_increment_demo_min = -20000;
+int xspeed_increment_demo_max =  30000;
+int xspeed_increment_demo_min = -30000;
 void loop() {
   xspeed += xspeed_increment_demo;
   if (xspeed > xspeed_increment_demo_max) {
